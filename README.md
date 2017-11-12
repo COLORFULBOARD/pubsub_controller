@@ -4,12 +4,12 @@
 GCP Pub/Subを使いやすくするためのModule。
 
 ## Usage
-- Settings
+- Settings<br>
 `setting.py`の内容を環境に合わせて編集します。<br>
--- GCP_PROJECT_ID
-GCPのProjectIDを指定します。
+    - GCP_PROJECT_ID<br>
+    GCPのProjectIDを指定します。
 
-- Pull Subscriber
+- Pull Subscriber<br>
 SubscriptionをPullする常駐プロセス。<br>
 `apps/subscriber/pull/subscribe_base.py`<br>
 を継承し、<br>
