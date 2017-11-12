@@ -16,3 +16,6 @@ SubscriptionをPullする常駐プロセス。<br>
 `received_function`をオーバーライドすると、<br>
 PullSubscriptionを受け取った際に<br>
 `received_function`が実行されるようになっています。
+    - config<br>
+    Pull Subscriberは常駐プロセスとして動作するため、<br>
+    supervisorのconfigファイルを作成しています。
