@@ -5,7 +5,10 @@ import threading
 import signal
 import time
 
-from settings import GCP_PROJECT_ID
+from settings import (
+    GCP_PROJECT_ID,
+    POLLING_TIME,
+)
 from apps.utils.log import log, error_log
 from apps.subscriber.pull.gunicorn_restart import GunicornRestart
 
@@ -66,12 +69,11 @@ def main():
 
         for thread in threads:
             t = threading.Thread(target=thread)
-            # t.daemon = True
             t.start()
 
         # 定期的にSubscriberClose -> Openを繰り返す
         while True:
-            time.sleep(60)
+            time.sleep(POLLING_TIME)
             sync_stop_subscriber()
 
     except Exception as e:
