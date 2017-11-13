@@ -64,7 +64,7 @@ def main():
     threads = []
 
     try:
-        # threadsに格納されているメソッド分、daemonを作成する。
+        # threadsに格納されているメソッド分、threadを作成する。
         threads.append(gunicorn_restart)
 
         for thread in threads:
