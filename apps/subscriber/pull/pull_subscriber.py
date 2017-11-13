@@ -20,12 +20,22 @@ def gunicorn_restart():
     GunicornRestart.pull(SUBSCRIPTION_NAME.format(unique='unique_key'))
 
 
-def subscriber_all_close():
+def subscriber_all_close(end=False):
     """
     全てのSubscriberをCloseする。
     *** Subscriberを増やした際は追加する。 ***
     """
-    GunicornRestart.close()
+    GunicornRestart.close(end)
+
+
+def sync_stop_subscriber(end=False):
+    """
+    全てのSubscriberを停止する。(同期)
+    :param end: Subscriberを完全に終了するかどうか。
+    """
+    t = threading.Thread(target=subscriber_all_close, args=(end,))
+    t.start()
+    t.join(timeout=60)
 
 
 def main():
@@ -35,19 +45,15 @@ def main():
     """
     log('Start Pull Subscriber.')
 
-
     def signal_handler(signum, stack):
         """
         受け取ったSIGNALに応じて終了処理をハンドリングする。
         :param signum: default
         :param stack: default
         """
-        t = threading.Thread(target=subscriber_all_close)
-        t.start()
-        t.join(timeout=60)
+        sync_stop_subscriber(end=True)
         log('Stop Pull Subscriber. signal by {}'.format(signum))
         exit(0)
-
 
     # SIGNALに応じたハンドリング
     signal.signal(signal.SIGTERM, signal_handler)
@@ -60,12 +66,13 @@ def main():
 
         for thread in threads:
             t = threading.Thread(target=thread)
-            t.daemon = True
+            # t.daemon = True
             t.start()
 
-        # プロセスを常駐させる
+        # 定期的にSubscriberClose -> Openを繰り返す
         while True:
-            time.sleep(10)
+            time.sleep(60)
+            sync_stop_subscriber()
 
     except Exception as e:
         error_log('Error Pull Subscriber. ... {}'.format(e))
