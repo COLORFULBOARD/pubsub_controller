@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals
+)
 
 import threading
 import signal
@@ -8,27 +13,28 @@ import time
 from settings import (
     GCP_PROJECT_ID,
     POLLING_TIME,
+    SUBSCRIBE_MULTI_KEY,
 )
 from apps.utils.log import log, error_log
-from apps.subscriber.pull.gunicorn_restart import GunicornRestart
+from apps.subscriber.pull.subscribe_multi import SubscribeMulti
 
 SUBSCRIPTION_NAME = 'projects/' + GCP_PROJECT_ID + '/subscriptions/{unique}'
 
 
-def gunicorn_restart():
+def subscribe_multi():
     """
-    メッセージを受け取ってgunicorn restartする。
-    *** Subscriberを増やす際はこのようなメソッドを追加し、メインのthreadsにappendする。 ***
+    メッセージを受け取って指定されたClassを実行する
+    Pub/subメッセージのattributeに {target: ClassName} を指定すると、
+    ClassNameのmainメソッドを実行する。
     """
-    GunicornRestart.pull(SUBSCRIPTION_NAME.format(unique='unique_key'))
+    SubscribeMulti.pull(SUBSCRIPTION_NAME.format(unique=SUBSCRIBE_MULTI_KEY))
 
 
 def subscriber_all_close(end=False):
     """
     全てのSubscriberをCloseする。
-    *** Subscriberを増やした際は追加する。 ***
     """
-    GunicornRestart.close(end)
+    SubscribeMulti.close(end)
 
 
 def sync_stop_subscriber(end=False):
@@ -64,8 +70,7 @@ def main():
     threads = []
 
     try:
-        # threadsに格納されているメソッド分、threadを作成する。
-        threads.append(gunicorn_restart)
+        threads.append(subscribe_multi)
 
         for thread in threads:
             t = threading.Thread(target=thread)
