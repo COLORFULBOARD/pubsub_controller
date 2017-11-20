@@ -16,12 +16,12 @@ class SubscribeMeta(SubscribeBase):
     @classmethod
     def received_function(cls, message):
         """
-        Subscribeメッセージで指定されたClassを実行する
+        Pub/Subメッセージで指定されたClassを実行する
         :param message: subscribeしたメッセージ
         """
         if 'target' in message.attributes:
+            # メッセージAttributeの['target']で指定されたClass内のmainメソッドを実行
             target_class_name = message.attributes['target']
-            # Subscribeしたメッセージがクラス名と一致すれば実行
             log('Exec : {}'.format(target_class_name))
             try:
                 target_class = eval(target_class_name)
