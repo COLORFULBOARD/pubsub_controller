@@ -11,33 +11,24 @@ from settings import (
 )
 from apps.utils.log import log, error_log
 from apps.subscriber.pull.subscribe_meta import SubscribeMeta
-from apps.subscriber.pull.gunicorn_restart import GunicornRestart
 
 SUBSCRIPTION_NAME = 'projects/' + GCP_PROJECT_ID + '/subscriptions/{unique}'
-
-
-def gunicorn_restart():
-    """
-    メッセージを受け取ってgunicorn restartする。
-    *** Subscriberを増やす際はこのようなメソッドを追加し、メインのthreadsにappendする。 ***
-    """
-    GunicornRestart.pull(SUBSCRIPTION_NAME.format(unique='unique_key'))
 
 
 def subscribe_meta():
     """
     メッセージを受け取って指定されたClassを実行する
+    Pub/subメッセージのattributeに {target: ClassName} を指定すると、
+    ClassNameのmainメソッドを実行する。
     """
-    SubscribeMeta.pull(SUBSCRIPTION_NAME.format(unique='sub_meta'))
+    SubscribeMeta.pull(SUBSCRIPTION_NAME.format(unique='unique-key'))
 
 
 def subscriber_all_close(end=False):
     """
     全てのSubscriberをCloseする。
-    *** Subscriberを増やした際は追加する。 ***
     """
     SubscribeMeta.close(end)
-    # GunicornRestart.close(end)
 
 
 def sync_stop_subscriber(end=False):
@@ -73,7 +64,6 @@ def main():
     threads = []
 
     try:
-        # threadsに格納されているメソッド分、threadを作成する。
         threads.append(subscribe_meta)
 
         for thread in threads:

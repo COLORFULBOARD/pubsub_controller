@@ -14,8 +14,8 @@ class SubscribeMeta(SubscribeBase):
         Subscribeメッセージで指定されたClassを実行する
         :param message: subscribeしたメッセージ
         """
-        if 'target' in message:
-            target_class_name = message.target
+        if 'target' in message.attributes:
+            target_class_name = message.attributes['target']
             # Subscribeしたメッセージがクラス名と一致すれば実行
             log('Exec : {}'.format(target_class_name))
             try:
@@ -27,7 +27,7 @@ class SubscribeMeta(SubscribeBase):
                             has_main = True
                             break
                     if has_main:
-                        target_class.main(message)
+                        target_class.main(message.data, message.attributes)
                     else:
                         error_log('Class {} has not main method.'.format(target_class_name))
                 else:
