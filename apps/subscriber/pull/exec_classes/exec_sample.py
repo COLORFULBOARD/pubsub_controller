@@ -11,7 +11,8 @@ from apps.utils.log import log, error_log
 
 def main(message_data, message_attr):
     """
-    Sample
+    Exec Sample
+    Require define "main(message_data, message_attr)" method
     """
     log(message_data)
     if 'text' in message_attr:
