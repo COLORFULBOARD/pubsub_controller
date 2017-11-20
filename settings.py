@@ -8,5 +8,5 @@ from __future__ import (
 
 
 GCP_PROJECT_ID = 'GCP_Project_id'
-SUBSCRIBE_META_KEY = 'Subscription_unique_key'
+SUBSCRIBE_MULTI_KEY = 'Subscription_unique_key'
 POLLING_TIME = 60
