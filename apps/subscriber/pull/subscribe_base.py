@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals
+)
 
 from google.cloud import pubsub_v1
 from apps.utils.log import log, error_log
@@ -59,9 +64,7 @@ class SubscribeBase(object):
                 log('Closed for messages on {}'.format(subscription_name))
             except KeyboardInterrupt:
                 log('Stopped Subscribe on {}'.format(subscription_name))
-                raise
             except Exception as e:
                 error_log('subscription error. detail = {}'.format(e))
-                raise
             finally:
                 cls.subscription.close()
