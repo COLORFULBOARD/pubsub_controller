@@ -25,16 +25,16 @@ class SubscribeMulti(SubscribeBase):
             log('Exec : {}'.format(target_module_path))
             try:
                 target = importlib.import_module(target_module_path)
-                if target:
-                    if hasattr(target, 'main'):
-                        target.main(message.data, message.attributes)
-                    else:
-                        error_log('Module {} has not main method.'.format(target_module_path))
             except ImportError:
-                error_log('Module {} not found.'.format(target_module_path))
+                error_log('Module "{}" not found.'.format(target_module_path))
                 raise
             except Exception as e:
-                error_log('Exec {}. error : {}'.format(target_module_path, e))
+                error_log('Exec "{}". error : {}'.format(target_module_path, e))
                 raise
+            else:
+                if hasattr(target, 'main'):
+                    target.main(message.data, message.attributes)
+                else:
+                    error_log('Module {} has not main method.'.format(target_module_path))
         else:
-            log('target module name is not found')
+            log('Require target module name.')
