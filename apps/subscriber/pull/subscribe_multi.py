@@ -34,9 +34,12 @@ class SubscribeMulti(SubscribeBase):
                     if has_main:
                         target.main(message.data, message.attributes)
                     else:
-                        error_log('Class {} has not main method.'.format(target_module_path))
-                else:
-                    error_log('Class {} not found.'.format(target_module_path))
+                        error_log('Module {} has not main method.'.format(target_module_path))
+            except ImportError:
+                error_log('Module {} not found.'.format(target_module_path))
+                raise
             except Exception as e:
                 error_log('Exec {}. error : {}'.format(target_module_path, e))
                 raise
+        else:
+            log('target module name is not found')
