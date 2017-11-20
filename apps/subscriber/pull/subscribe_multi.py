@@ -26,12 +26,7 @@ class SubscribeMulti(SubscribeBase):
             try:
                 target = importlib.import_module(target_module_path)
                 if target:
-                    has_main = False
-                    for x in dir(target):
-                        if x == 'main':
-                            has_main = True
-                            break
-                    if has_main:
+                    if hasattr(target, 'main'):
                         target.main(message.data, message.attributes)
                     else:
                         error_log('Module {} has not main method.'.format(target_module_path))
