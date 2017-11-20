@@ -13,6 +13,7 @@ import time
 from settings import (
     GCP_PROJECT_ID,
     POLLING_TIME,
+    SUBSCRIBE_META_KEY,
 )
 from apps.utils.log import log, error_log
 from apps.subscriber.pull.subscribe_meta import SubscribeMeta
@@ -26,7 +27,7 @@ def subscribe_meta():
     Pub/subメッセージのattributeに {target: ClassName} を指定すると、
     ClassNameのmainメソッドを実行する。
     """
-    SubscribeMeta.pull(SUBSCRIPTION_NAME.format(unique='unique-key'))
+    SubscribeMeta.pull(SUBSCRIPTION_NAME.format(unique=SUBSCRIBE_META_KEY))
 
 
 def subscriber_all_close(end=False):
