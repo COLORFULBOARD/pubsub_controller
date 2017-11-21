@@ -44,7 +44,7 @@ if __name__ == '__main__':
         exit(1)
 
     print('Argument : {}'.format(args))
-    message_attr = None
+    message_attr = {}
     if len(args) == 4:
         try:
             message_attr = ast.literal_eval(args[3])
