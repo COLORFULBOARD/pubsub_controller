@@ -48,9 +48,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     print('Argument : {}'.format(args))
-    message_attr = {}
-
-    if args.attr:
-        message_attr = args.attr
+    message_attr = args.attr if args.attr else {}
 
     main(topic_name=args.topic, message_data=args.message, **message_attr)
