@@ -6,51 +6,51 @@ from __future__ import (
     unicode_literals
 )
 
-import sys
-import ast
+import json
+import argparse
 from google.cloud import pubsub_v1
-from apps.utils.log import log, error_log
+from apps.utils.log import log
 from settings import GCP_PROJECT_ID
 
 
-def __encode_byteString(target):
+def _encode_byteString(target):
     if isinstance(target, unicode):
         return target.encode('utf-8')
     else:
         return target
 
 
-def main(topic_name, message_data, **message_attr):
-    """
-    受け取った値を元にPub/SubメッセージをPublishする
+def main(topic_name, message_data, **kwargs):
+    """受け取った値を元にPub/SubメッセージをPublishする
+
     :param topic_name: Publish target Topic 
     :param message_data: Publish message data
-    :param message_attr: (optional)Publish message attr
+    :param kwargs: (optional)Publish message attr
     """
     publisher = pubsub_v1.PublisherClient()
     topic_path = publisher.topic_path(GCP_PROJECT_ID, topic_name)
     log('Publishing for message on {}'.format(topic_name))
 
-    data = __encode_byteString(message_data)
-    publisher.publish(topic_path, data=data, **message_attr)
+    data = _encode_byteString(message_data)
+    publisher.publish(topic_path, data=data, **kwargs)
 
     log('Published message.')
 
 if __name__ == '__main__':
-    args = sys.argv
-    if not len(args) == 3 and not len(args) == 4:
-        error_log('Require argument. topic_name, message_data, (optional)message_attr')
-        error_log('Input argument is {}'.format(args))
-        exit(1)
+    parser = argparse.ArgumentParser(
+        prog='publish_message.py',
+        usage='Exec on terminal.',
+        add_help=True,
+    )
+    parser.add_argument('-t', '--topic', help='topic name', required=True, type=str)
+    parser.add_argument('-m', '--message', help='message data', required=True, type=str)
+    parser.add_argument('-a', '--attr', help='message attr', type=json.loads)
 
+    args = parser.parse_args()
     print('Argument : {}'.format(args))
     message_attr = {}
-    if len(args) == 4:
-        try:
-            message_attr = ast.literal_eval(args[3])
-        except Exception as e:
-            error_log('Invalid argument. Attr is must be dict format.')
-            exit(1)
 
-    main(topic_name=args[1], message_data=args[2], **message_attr)
+    if args.attr:
+        message_attr = args.attr
 
+    main(topic_name=args.topic, message_data=args.message, **message_attr)
