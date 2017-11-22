@@ -31,8 +31,8 @@ SubscriptionをPullする常駐プロセス。
             - `-a = (Optional) message attribute`
     - Exec on PythonCode
         ```python
-        import apps.publisher.publish_message as publish
-        publish.main('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
+        from apps.publisher.publish_message import publish
+        publish('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
         ```
 
 ## Option
