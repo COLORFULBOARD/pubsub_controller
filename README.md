@@ -25,14 +25,14 @@ SubscriptionをPullする常駐プロセス。
     
 - Publisher<br>
     - Exec on CommandLine
-        - `python apps/publisher/publish_message.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`<br>
+        - `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`<br>
             - `-t = topic name`
             - `-m = message data`
             - `-a = (Optional) message attribute`
     - Exec on PythonCode
         ```python
-        import apps.publisher.publish_message as publish
-        publish.main('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
+        from apps.publisher.publish_message import publish
+        publish('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
         ```
 
 ## Option
