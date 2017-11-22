@@ -23,6 +23,18 @@ SubscriptionをPullする常駐プロセス。
     Pull Subscriberは常駐プロセスとして動作するため、<br>
     参考までにsupervisorのconfigファイルを作成しています。
     
+- Publisher<br>
+    - Exec on CommandLine
+        - `python apps/publisher/publish_message.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`<br>
+            - `-t = topic name`
+            - `-m = message data`
+            - `-a = (Optional) message attribute`
+    - Exec on PythonCode
+        ```python
+        import apps.publisher.publish_message as publish
+        publish.main('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
+        ```
+
 ## Option
 - Custom Subscriber
     1. 新たにSubscriberを定義する場合は、
