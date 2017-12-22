@@ -64,7 +64,7 @@ class SubscribeBase(object):
                 log('Closed for messages on {}'.format(subscription_name))
             except KeyboardInterrupt:
                 log('Stopped Subscribe on {}'.format(subscription_name))
+                cls.subscription.close()
             except Exception as e:
                 error_log('subscription error. detail = {}'.format(e))
-            finally:
                 cls.subscription.close()
