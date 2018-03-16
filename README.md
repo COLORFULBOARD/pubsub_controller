@@ -8,7 +8,7 @@ GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあれば�
 1. `git clone https://github.com/COLORFULBOARD/pubsub_controller.git`
 2. `cd pubsub_controller`
 3. `pipenv install`
-4. `python setup.py install`
+4. `python setup.py install` (ex: SUBSCRIPTION ID=test-sub)
 5. ``export PYTHONPATH=`pwd` ``
 6. `python apps/subscriber/pull/pull_subscriber.py`
 7. Open Another Terminal Window.
