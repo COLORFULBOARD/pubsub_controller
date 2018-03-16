@@ -18,12 +18,14 @@ with open('apps/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
             fd.read(), re.MULTILINE).group(1)
 
+print('This package will fetch one subscription and pull if there is a message.')
+print('If you have not created Pub/Sub\'s topic and subscription on the GCP Console yet, please create it.')
 GCP_PROJECT_ID = raw_input('Please input GCP_PROJECT_ID >>>  ')
-SUBSCRIBE_MULTI_KEY = raw_input('Please input SUBSCRIBE_MULTI_KEY >>>  ')
+SUBSCRIPTION_ID = raw_input('Please input SUBSCRIPTION_ID >>>  ')
 
 with open('settings.py', 'a') as fd:
     fd.write('GCP_PROJECT_ID = \'{}\'\n'.format(GCP_PROJECT_ID))
-    fd.write('SUBSCRIBE_MULTI_KEY = \'{}\'\n'.format(SUBSCRIBE_MULTI_KEY))
+    fd.write('SUBSCRIPTION_ID = \'{}\'\n'.format(SUBSCRIPTION_ID))
 
 setup(
     name='pubsub_controller',
