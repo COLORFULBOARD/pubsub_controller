@@ -18,14 +18,32 @@ with open('apps/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
             fd.read(), re.MULTILINE).group(1)
 
+print('Setup Start.')
 print('This package will fetch one subscription and pull if there is a message.')
 print('If you have not created Pub/Sub\'s topic and subscription on the GCP Console yet, please create it.')
 GCP_PROJECT_ID = raw_input('Please input GCP_PROJECT_ID >>>  ')
 SUBSCRIPTION_ID = raw_input('Please input SUBSCRIPTION_ID >>>  ')
+POLLING_TIME = raw_input('Please input fetch interval second(blank: 60) >>>  ')
 
-with open('settings.py', 'a') as fd:
-    fd.write('GCP_PROJECT_ID = \'{}\'\n'.format(GCP_PROJECT_ID))
-    fd.write('SUBSCRIPTION_ID = \'{}\'\n'.format(SUBSCRIPTION_ID))
+if not POLLING_TIME:
+    POLLING_TIME = 60
+
+with open('settings.py', 'w') as fd:
+    settings = \
+"""# -*- coding: utf-8 -*-
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals
+)
+
+GCP_PROJECT_ID = \'{}\'
+SUBSCRIPTION_ID = \'{}\'
+POLLING_TIME = {}""".format(GCP_PROJECT_ID, SUBSCRIPTION_ID, POLLING_TIME)
+
+    fd.write(settings)
+
 
 setup(
     name='pubsub_controller',
@@ -41,4 +59,4 @@ setup(
     packages=find_packages()
 )
 
-print('Setup Completed.')
+print('\nSetup Completed.')
