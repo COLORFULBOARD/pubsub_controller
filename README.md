@@ -9,12 +9,13 @@ GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあれば�
 2. `cd pubsub_controller`
 3. `pipenv install`
 4. `python setup.py install`
-5. ``export PYTHONPATH= `pwd` ``
+5. ``export PYTHONPATH=`pwd` ``
 6. `python apps/subscriber/pull/pull_subscriber.py`
 7. Open Another Terminal Window.
-8. ``export PYTHONPATH= `pwd` ``
-9. `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
-10. In the Subscriber's window you will see the contents of the message you just published!
+8. `cd pubsub_controller`
+9. ``export PYTHONPATH=`pwd` ``
+10. `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
+11. In the Subscriber's window you will see the contents of the message you just published!
 
 ## Usage
 - Settings<br>
