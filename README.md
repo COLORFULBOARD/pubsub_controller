@@ -49,7 +49,7 @@ CLIまたはPythonスクリプトから実行し、指定のtopicへメッセー
 6. `python apps/subscriber/pull/pull_subscriber.py`
 7. Open Another Terminal Window.
 8. ``export PYTHONPATH= `pwd` ``
-9. `python cli_publish.py -t test -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
+9. `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
 10. In the Subscriber's window you will see the contents of the message you just published!
 
 ## Option
