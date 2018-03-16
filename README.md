@@ -1,21 +1,24 @@
 # Pub/Sub Controller
 
 ## Description
-GCP Pub/Subを使いやすくするためのModule。
+GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあればメッセージ内のキーで指定されたスクリプトを実行する。
 
 ## Usage
 - Settings<br>
-`setting.py`の内容を環境に合わせて編集します。<br>
-    - GCP_PROJECT_ID<br>
-    GCPのProjectIDを指定します。
-    - SUBSCRIBE_MULTI_KEY<br>
-    このProjectで汎用的に使用するSubscriptionKeyを指定します。
+`python setup.py install` でセットアップを開始します。<br>
+    - GCP PROJECT ID<br>
+    GCPのProjectIDを指定
+    - SUBSCRIPTION ID<br>
+    このProjectで使用するSubscriptionIDを指定<br>
+    例) Subscription nameが`projects/hoge-project/subscriptions/fuga`の場合は`fuga`を指定
+    - Interval Second<br>
+    SubscriptionをFetchする間隔(秒)<br>
 
 - Subscriber<br>
 `apps/subscriber/pull/exec_classes/exec_sample.py`<br>
-を参考に、mainメソッドを定義したModuleを作成すると、<br>
-`SUBSCRIBE_MULTI_KEY`で指定したSubscriptionに来たメッセージの<br>
-{target: ModuleName} で指定されたModuleを実行します。
+を参考に、所定のmainメソッドを定義したModuleを作成すると、<br>
+Setup時に`SUBSCRIPTION ID`で指定したSubscriptionに来たメッセージに含まれる<br>
+{target: ModuleName} のModuleNameを実行します。
 
 - Pull Subscriber<br>
 SubscriptionをPullする常駐プロセス。
@@ -24,6 +27,7 @@ SubscriptionをPullする常駐プロセス。
     参考までにsupervisorのconfigファイルを作成しています。
     
 - Publisher<br>
+CLIまたはPythonスクリプトから実行し、指定のtopicへメッセージをPublishする。
     - Exec on CommandLine
         - `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`<br>
             - `-t = topic name`

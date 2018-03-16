@@ -21,9 +21,9 @@ with open('apps/__init__.py', 'r') as fd:
 print('Setup Start.')
 print('This package will fetch one subscription and pull if there is a message.')
 print('If you have not created Pub/Sub\'s topic and subscription on the GCP Console yet, please create it.')
-GCP_PROJECT_ID = raw_input('Please input GCP_PROJECT_ID >>>  ')
-SUBSCRIPTION_ID = raw_input('Please input SUBSCRIPTION_ID >>>  ')
-POLLING_TIME = raw_input('Please input fetch interval second(blank: 60) >>>  ')
+GCP_PROJECT_ID = raw_input('Please input GCP PROJECT ID >>>  ')
+SUBSCRIPTION_ID = raw_input('Please input SUBSCRIPTION ID >>>  ')
+POLLING_TIME = raw_input('Please input fetch Interval Second(blank: 60) >>>  ')
 
 if not POLLING_TIME:
     POLLING_TIME = 60
