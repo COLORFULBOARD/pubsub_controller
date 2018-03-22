@@ -10,7 +10,7 @@ import threading
 import signal
 import time
 
-from settings import (
+from apps.settings import (
     GCP_PROJECT_ID,
     POLLING_TIME,
     SUBSCRIPTION_ID,
