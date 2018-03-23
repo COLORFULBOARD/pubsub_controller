@@ -6,13 +6,14 @@ from __future__ import (
     unicode_literals
 )
 
+import six
 from google.cloud import pubsub_v1
 from pubsub_controller.utils.log import log
 from pubsub_controller.settings import GCP_PROJECT_ID
 
 
 def _encode_byteString(target):
-    if isinstance(target, unicode):
+    if isinstance(target, six.string_types):
         return target.encode('utf-8')
     else:
         return target

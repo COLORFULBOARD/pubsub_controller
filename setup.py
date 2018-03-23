@@ -25,16 +25,16 @@ setup(
     long_description=readme,
     author='SENSY Inc.',
     url='https://github.com/COLORFULBOARD/pubsub_controller',
-    license=license,
+    license='Apache 2.0',
     install_requires=[
-        'google-cloud-pubsub==0.30.1'
+        'google-cloud-pubsub==0.30.1',
+        'Click>=6.7',
+        'six>=1.11.0'
     ],
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'pubsub-init = pubsub_controller.utils.create_setting:main',
-            'subscribe = pubsub_controller.subscriber.pull.pull_subscriber:main',
-            'publish = pubsub_controller.publisher.cli_publish:main',
+            'psc = pubsub_controller.pubsub_controller:cmd'
         ],
     },
 )
