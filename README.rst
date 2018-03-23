@@ -16,11 +16,11 @@ Installation and Try to this sample.
 
 #. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
 #. ``pip install pubsub_controller``
-#. ``pubsub-init`` and input your Pub/Sub setting. (ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
-#. ``subscribe``
+#. ``psc init`` and input your Pub/Sub setting. (ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
+#. ``psc subscribe``
 #. Subscriber will start immediately.
 #. Open Another Terminal Window.
-#. ``publish -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'``
+#. ``psc publish test test-message '{"target":"exec_sample","text":"test_text"}'``
 #. In the Subscriber’s window you will see the contents of the message you just published!
 
 Installation and Try to this sample.
@@ -39,7 +39,7 @@ Details
 -------
 
 -  Settings ``pubsub_controller/settings.py`` Required parameters are
-   set here. (It is set automatically by the ``pubsub-init`` command)
+   set here. (It is set automatically by the ``psc init`` command)
 
    -  GCP PROJECT ID Your GCP ProjectID
    -  SUBSCRIPTION ID Enter the Subscription ID to be used. If the
@@ -61,13 +61,13 @@ Details
 
    -  Exec on CommandLine
 
-      - ``python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'``
+      - ``psc publish test test-message '{"target":"exec_sample","text":"test_text"}'``
 
       -  arguments
 
-         -  ``-t = topic name``
-         -  ``-m = message data``
-         -  ``-a = (Optional) message attribute``
+         -  ``arg1 = topic name``
+         -  ``arg2 = message data``
+         -  ``arg3 = message attribute(json format)``
 
    -  Exec on PythonCode
 

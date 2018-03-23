@@ -7,11 +7,11 @@ GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあれば�
 ## Installation and Try to this sample.
 1. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
 2. `pip install pubsub_controller`
-3. `pubsub-init` and input your Pub/Sub setting<br>(ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
-4. `subscribe`
+3. `psc init` and input your Pub/Sub setting<br>(ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
+4. `psc subscribe`
 5. Subscriber will start immediately.
 6. Open Another Terminal Window.
-7. `publish -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
+7. `psc publish test test-message '{"target":"exec_sample","text":"test_text"}'`
 8. In the Subscriber's window you will see the contents of the message you just published!
 
 ## How to add running process when message received.
@@ -24,7 +24,7 @@ GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあれば�
 ## Details
 - Settings<br>
 `pubsub_controller/settings.py` Required parameters are set here.<br>
-(It is set automatically by the `pubsub-init` command)<br>
+(It is set automatically by the `psc init` command)<br>
     - GCP PROJECT ID<br>
     Your GCP ProjectID
     - SUBSCRIPTION ID<br>
@@ -45,11 +45,11 @@ This is a resident process that pulls Subscription.
 - Publisher<br>
 Execute from the CLI or Python script and publish the message to the topic.
     - Exec on CommandLine
-        - `python cli_publish.py -t test-topic -m test_data -a\ `<br>`'{"target":"exec_sample","text":"test_text"}'`<br>
+        - `psc publish test test-message '{"target":"exec_sample","text":"test_text"}'`<br>
             - arguments
-                - `-t = topic name`
-                - `-m = message data`
-                - `-a = (Optional) message attribute`
+                - `arg1 = topic name`
+                - `arg2 = message data`
+                - `arg3 = message attribute(json format)`
     - Exec on PythonCode
         ```python
         from apps.publisher.publish_message import publish
