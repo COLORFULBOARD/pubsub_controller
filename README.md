@@ -5,14 +5,21 @@ Fetch the Subscription of the GCP Pub/Sub regularly, and if there is a message e
 GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあればメッセージ内のキーで指定されたスクリプトを実行する。
 
 ## Installation and Try to this sample.
-0. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
-1. `pip install pubsub_controller`
-2. `pubsub-init` and input your Pub/Sub setting<br>(ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
-3. `subscribe`
-4. Subscriber will start immediately.
-5. Open Another Terminal Window.
-6. `publish -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
-7. In the Subscriber's window you will see the contents of the message you just published!
+1. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
+2. `pip install pubsub_controller`
+3. `pubsub-init` and input your Pub/Sub setting<br>(ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
+4. `subscribe`
+5. Subscriber will start immediately.
+6. Open Another Terminal Window.
+7. `publish -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`
+8. In the Subscriber's window you will see the contents of the message you just published!
+
+## How to add running process when message received.
+1. Create a new python file under "exec_classes" directory.
+- The same Python filename as the name specified by the attribute "target" key of the message to be published is executed.
+2. Implement `def main (message_data, message_attr)` and describe what you want to do after receiving the message.
+- "message_data" contains the contents of the received message.
+- "message_attr" contains optional attributes of the received message.
 
 ## Details
 - Settings<br>

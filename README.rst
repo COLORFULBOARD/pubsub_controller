@@ -23,6 +23,18 @@ Installation and Try to this sample.
 #. ``publish -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'``
 #. In the Subscriber’s window you will see the contents of the message you just published!
 
+Installation and Try to this sample.
+------------------------------------
+
+1. Create a new python file under "exec_classes" directory.
+
+    - The same Python filename as the name specified by the attribute "target" key of the message to be published is executed.
+
+2. Implement ``def main (message_data, message_attr)`` and describe what you want to do after receiving the message.
+
+    - "message_data" contains the contents of the received message.
+    - "message_attr" contains optional attributes of the received message.
+
 Details
 -------
 
