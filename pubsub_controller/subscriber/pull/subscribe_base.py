@@ -7,7 +7,7 @@ from __future__ import (
 )
 
 from google.cloud import pubsub_v1
-from apps.utils.log import log, error_log
+from pubsub_controller.utils.log import log, error_log
 
 
 class SubscribeBase(object):

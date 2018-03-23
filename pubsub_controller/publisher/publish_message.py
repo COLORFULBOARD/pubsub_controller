@@ -7,8 +7,8 @@ from __future__ import (
 )
 
 from google.cloud import pubsub_v1
-from apps.utils.log import log
-from apps.settings import GCP_PROJECT_ID
+from pubsub_controller.utils.log import log
+from pubsub_controller.settings import GCP_PROJECT_ID
 
 
 def _encode_byteString(target):

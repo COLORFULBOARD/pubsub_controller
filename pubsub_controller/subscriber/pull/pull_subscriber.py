@@ -10,13 +10,13 @@ import threading
 import signal
 import time
 
-from apps.settings import (
+from pubsub_controller.settings import (
     GCP_PROJECT_ID,
     POLLING_TIME,
     SUBSCRIPTION_ID,
 )
-from apps.utils.log import log, error_log
-from apps.subscriber.pull.subscribe_multi import SubscribeMulti
+from pubsub_controller.utils.log import log, error_log
+from pubsub_controller.subscriber.pull.subscribe_multi import SubscribeMulti
 
 SUBSCRIPTION_NAME = 'projects/' + GCP_PROJECT_ID + '/subscriptions/{unique}'
 
