@@ -8,12 +8,6 @@ try:
 except IOError:
     readme = ''
 
-try:
-    with open('LICENSE') as f:
-        license = f.read()
-except IOError:
-    license = ''
-
 with open('pubsub_controller/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
             fd.read(), re.MULTILINE).group(1)
@@ -34,7 +28,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'psc = pubsub_controller.pubsub_controller:cmd'
+            'pubsubcontroller = pubsub_controller.pubsub_controller:cmd'
         ],
     },
 )

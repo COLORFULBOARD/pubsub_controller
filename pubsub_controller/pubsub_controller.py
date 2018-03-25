@@ -20,9 +20,11 @@ def cmd():
 
 @cmd.command(name='init', short_help='init the setting')
 def setting_init():
-    click.echo('PubSub Controller Setup Start.')
-    click.echo('This package will fetch one subscription and pull if there is a message.')
-    click.echo('If you have not created Pub/Sub\'s topic and subscription on the GCP Console yet, please create it.')
+    message = """PubSub Controller Setup Start.
+    This package will fetch one subscription and pull if there is a message.
+    If you have not created Pub/Sub\'s topic and subscription on the GCP Console yet, please create it.
+    """
+    click.echo(message)
 
     project_id = click.prompt('Please input GCP_PROJECT_ID', type=str)
     subscription_id = click.prompt('Please input SUBSCRIPTION_ID', type=str)

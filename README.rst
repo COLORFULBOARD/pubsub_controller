@@ -16,11 +16,11 @@ Installation and Try to this sample.
 
 #. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
 #. ``pip install pubsub_controller``
-#. ``psc init`` and input your Pub/Sub setting. (ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
-#. ``psc subscribe``
+#. ``pubsubcontroller init`` and input your Pub/Sub setting. (ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
+#. ``pubsubcontroller subscribe``
 #. Subscriber will start immediately.
 #. Open Another Terminal Window.
-#. ``psc publish test test-message '{"target":"exec_sample","text":"test_text"}'``
+#. ``pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'``
 #. In the Subscriber’s window you will see the contents of the message you just published!
 
 Installation and Try to this sample.
@@ -39,7 +39,7 @@ Details
 -------
 
 -  Settings ``pubsub_controller/settings.py`` Required parameters are
-   set here. (It is set automatically by the ``psc init`` command)
+   set here. (It is set automatically by the ``pubsubcontroller init`` command)
 
    -  GCP PROJECT ID Your GCP ProjectID
    -  SUBSCRIPTION ID Enter the Subscription ID to be used. If the
@@ -61,7 +61,7 @@ Details
 
    -  Exec on CommandLine
 
-      - ``psc publish test test-message '{"target":"exec_sample","text":"test_text"}'``
+      - ``pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'``
 
       -  arguments
 
