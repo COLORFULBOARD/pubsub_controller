@@ -7,8 +7,8 @@ from __future__ import (
 )
 
 import importlib
-from apps.utils.log import log, error_log
-from apps.subscriber.pull.subscribe_base import SubscribeBase
+from pubsub_controller.utils.log import log, error_log
+from pubsub_controller.subscriber.pull.subscribe_base import SubscribeBase
 
 
 class SubscribeMulti(SubscribeBase):
@@ -21,7 +21,7 @@ class SubscribeMulti(SubscribeBase):
         """
         if 'target' in message.attributes:
             # メッセージAttributeの['target']で指定されたmoduleをimportし、mainメソッドを実行
-            target_module_path = 'apps.subscriber.pull.exec_classes.{}'.format(message.attributes['target'])
+            target_module_path = 'pubsub_controller.subscriber.pull.exec_classes.{}'.format(message.attributes['target'])
             log('Exec : {}'.format(target_module_path))
             try:
                 target = importlib.import_module(target_module_path)

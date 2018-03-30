@@ -1,48 +1,57 @@
 # Pub/Sub Controller
 
 ## Description
-GCP Pub/Subを使いやすくするためのModule。
+Fetch the Subscription of the GCP Pub/Sub regularly, and if there is a message execute the script specified by the key in the message.<br><br>
+GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあればメッセージ内のキーで指定されたスクリプトを実行する。
 
-## Usage
+## Installation and Try to this sample.
+1. Create Pub/Sub topic and subscription on GCP. (ex: test-topic/test-sub)
+2. `pip install pubsub_controller`
+3. `pubsubcontroller init` and input your Pub/Sub setting<br>(ex: GCP_PROJECT_ID=your project id / SUBSCRIPTION_ID=test-sub)
+4. `pubsubcontroller subscribe`
+5. Subscriber will start immediately.
+6. Open Another Terminal Window.
+7. `pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'`
+8. In the Subscriber's window you will see the contents of the message you just published!
+
+## How to add running process when message received.
+1. Create a new python file under "exec_classes" directory.
+- The same Python filename as the name specified by the attribute "target" key of the message to be published is executed.
+2. Implement `def main (message_data, message_attr)` and describe what you want to do after receiving the message.
+- "message_data" contains the contents of the received message.
+- "message_attr" contains optional attributes of the received message.
+
+## Details
 - Settings<br>
-`setting.py`の内容を環境に合わせて編集します。<br>
-    - GCP_PROJECT_ID<br>
-    GCPのProjectIDを指定します。
-    - SUBSCRIBE_MULTI_KEY<br>
-    このProjectで汎用的に使用するSubscriptionKeyを指定します。
+`pubsub_controller/settings.py` Required parameters are set here.<br>
+(It is set automatically by the `pubsubcontroller init` command)<br>
+    - GCP PROJECT ID<br>
+    Your GCP ProjectID
+    - SUBSCRIPTION ID<br>
+    Enter the Subscription ID to be used.<br>
+    If the Subscription name is `projects/hoge-project/subscriptions/fuga`, please enter `fuga`.
+    - Interval Second<br>
+    Enter the interval to fetch Subscription in seconds.<br>
 
 - Subscriber<br>
-`apps/subscriber/pull/exec_classes/exec_sample.py`<br>
-を参考に、mainメソッドを定義したModuleを作成すると、<br>
-`SUBSCRIBE_MULTI_KEY`で指定したSubscriptionに来たメッセージの<br>
-{target: ModuleName} で指定されたModuleを実行します。
+If you need a new subscriber, please refer to `apps/subscriber/pull/exec_classes/exec_sample.py` and create it.
 
 - Pull Subscriber<br>
-SubscriptionをPullする常駐プロセス。
+This is a resident process that pulls Subscription.
     - config<br>
-    Pull Subscriberは常駐プロセスとして動作するため、<br>
-    参考までにsupervisorのconfigファイルを作成しています。
-    
+    For reference, I am creating a supervisor config file.<br>
+    `apps/subscriber/pull/config/pull_subscriber.ini`
+
 - Publisher<br>
+Execute from the CLI or Python script and publish the message to the topic.
     - Exec on CommandLine
-        - `python cli_publish.py -t test-topic -m test_data -a '{"target":"exec_sample","text":"test_text"}'`<br>
-            - `-t = topic name`
-            - `-m = message data`
-            - `-a = (Optional) message attribute`
+        - `pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'`<br>
+            - arguments
+                - `arg1 = topic name`
+                - `arg2 = message data`
+                - `arg3 = message attribute(json format)`
     - Exec on PythonCode
         ```python
         from apps.publisher.publish_message import publish
         publish('test-topic', 'test_data', {'target':'exec_sample','text':'test_text'})
         ```
-
-## Option
-- Custom Subscriber
-    1. 新たにSubscriberを定義する場合は、
-    `apps/subscriber/pull/subscribe_base.py`<br>
-    を継承し、<br>
-    `received_function`をオーバーライドしたClassを作成して下さい。
-    2. `apps/subscriber/pull/pull_subscriber.py`に<br>
-    ```CustomSubscriber.pull(SUBSCRIPTION_NAME.format(unique='unique_key'))```<br>
-    を実行するメソッドを作成し、`pull_subscriber.py`の`threads`にメソッドをappendして下さい。
-    3. `pull_subscriber.py`の```subscriber_all_close```に<br>
-    ```CustomSubscriber.close(end)```メソッドを追加して下さい。

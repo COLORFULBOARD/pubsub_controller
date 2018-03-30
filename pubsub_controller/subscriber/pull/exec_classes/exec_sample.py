@@ -6,7 +6,7 @@ from __future__ import (
     unicode_literals
 )
 
-from apps.utils.log import log, error_log
+from pubsub_controller.utils.log import log, error_log
 
 
 def main(message_data, message_attr):

@@ -6,7 +6,6 @@ from __future__ import (
     unicode_literals
 )
 
-
-GCP_PROJECT_ID = 'GCP_Project_id'
-SUBSCRIBE_MULTI_KEY = 'Subscription_unique_key'
+GCP_PROJECT_ID = 'INPUT-GCP-PROJECT-ID'
+SUBSCRIPTION_ID = 'INPUT-SUBSCRIPTION-ID'
 POLLING_TIME = 60
