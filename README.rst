@@ -20,7 +20,7 @@ Installation and Try to this sample.
 #. ``pubsubcontroller subscribe``
 #. Subscriber will start immediately.
 #. Open Another Terminal Window.
-#. ``pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'``
+#. ``pubsubcontroller publish test-topic test-message '{"target":"exec_sample","text":"test_text"}'``
 #. In the Subscriber’s window you will see the contents of the message you just published!
 
 Installation and Try to this sample.

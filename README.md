@@ -11,7 +11,7 @@ GCP Pub/SubのSubscriptionを定期的にFetchし、メッセージがあれば�
 4. `pubsubcontroller subscribe`
 5. Subscriber will start immediately.
 6. Open Another Terminal Window.
-7. `pubsubcontroller publish test test-message '{"target":"exec_sample","text":"test_text"}'`
+7. `pubsubcontroller publish test-topic test-message '{"target":"exec_sample","text":"test_text"}'`
 8. In the Subscriber's window you will see the contents of the message you just published!
 
 ## How to add running process when message received.
